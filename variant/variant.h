@@ -189,7 +189,7 @@ struct apply_to_variant<Fn, cons<Head, Tail>, R, L, false> {
                      const char& which) ->
         decltype(fn(std::declval<typename unwrapped<typename S::head_type>::type>()))
     {
-        if (R == which) {
+        if (__builtin_expect(R == which, 1)) {
             return unwrap_apply(fn, storage);
         } else {
             return apply_to_variant<Fn, Tail, R+1, L>::impl(
